@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Supervisors</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        nav a { margin-right: 14px; }
+        table { border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #999; padding: 6px 10px; text-align: left; }
+        th { background: #eee; }
+        img { width: 1.6cm; height: 1.6cm; object-fit: cover; border-radius: 4px; }
+        form { display: inline; }
+    </style>
+</head>
+<body>
+<nav>
+    <a th:href="@{/}">Supervisions</a>
+    <a th:href="@{/advisers}">Advisers</a>
+    <a th:href="@{/chat}">Chat with Llama 3.2</a>
+</nav>
+
+<h1>Student Supervisions</h1>
+<p><a th:href="@{/supervision/new}">+ Add supervision</a></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Photo</th><th>Adviser</th><th>Department</th>
+        <th>Study</th><th>Student</th><th>Performance</th><th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${rows}">
+        <td><img th:if="${r.photo}" th:src="@{/images/{n}(n=${r.photo})}" alt="photo"></td>
+        <td th:text="${r.adviserName}"></td>
+        <td th:text="${r.department}"></td>
+        <td th:text="${r.studyTitle}"></td>
+        <td th:text="${r.student}"></td>
+        <td th:text="${r.performance}"></td>
+        <td>
+            <a th:href="@{/supervision/{id}/edit(id=${r.id})}">edit</a>
+            <form th:action="@{/supervision/{id}/delete(id=${r.id})}" method="post">
+                <button type="submit">delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

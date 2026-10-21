@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Advisers</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        nav a { margin-right: 14px; }
+        table { border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #999; padding: 6px 10px; text-align: left; }
+        th { background: #eee; }
+        img { width: 1.6cm; height: 1.6cm; object-fit: cover; border-radius: 4px; }
+        form { display: inline; }
+    </style>
+</head>
+<body>
+<nav>
+    <a th:href="@{/}">Supervisions</a>
+    <a th:href="@{/advisers}">Advisers</a>
+    <a th:href="@{/chat}">Chat with Llama 3.2</a>
+</nav>
+
+<h1>Advisers</h1>
+<p><a th:href="@{/adviser/new}">+ Add adviser</a></p>
+
+<table>
+    <thead><tr><th>Photo</th><th>Name</th><th>Department</th><th>File in HDFS</th><th></th></tr></thead>
+    <tbody>
+    <tr th:each="a : ${advisers}">
+        <td><img th:if="${a.photo}" th:src="@{/images/{n}(n=${a.photo})}" alt="photo"></td>
+        <td th:text="${a.name}"></td>
+        <td th:text="${a.department}"></td>
+        <td th:text="${a.photo}"></td>
+        <td>
+            <a th:href="@{/adviser/{id}/edit(id=${a.id})}">edit</a>
+            <form th:action="@{/adviser/{id}/delete(id=${a.id})}" method="post">
+                <button type="submit">delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

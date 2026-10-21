@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Supervision</title>
+    <style> body { font-family: sans-serif; margin: 24px; } p { margin: 10px 0; } </style>
+</head>
+<body>
+<h2 th:text="${supervision.id == null} ? 'New supervision' : 'Edit supervision'"></h2>
+
+<form th:action="@{/supervision/save}" th:object="${supervision}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <p>Adviser:
+        <select th:field="*{adviserId}" required>
+            <option th:each="a : ${advisers}" th:value="${a.id}" th:text="${a.name}"></option>
+        </select>
+    </p>
+    <p>Study:
+        <select th:field="*{studyId}" required>
+            <option th:each="s : ${studies}" th:value="${s.id}" th:text="${s.title}"></option>
+        </select>
+    </p>
+    <p>Student: <input type="text" th:field="*{student}" required></p>
+    <p>Performance:
+        <select th:field="*{performance}">
+            <option value="Excellent">Excellent</option>
+            <option value="Very Good">Very Good</option>
+            <option value="Good">Good</option>
+            <option value="Average">Average</option>
+            <option value="Poor">Poor</option>
+        </select>
+    </p>
+    <button type="submit">Save</button>
+    <a th:href="@{/}">Cancel</a>
+</form>
+</body>
+</html>

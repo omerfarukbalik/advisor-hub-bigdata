@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adviser</title>
+    <style> body { font-family: sans-serif; margin: 24px; } p { margin: 10px 0; }
+          img { width: 2.5cm; border-radius: 4px; } </style>
+</head>
+<body>
+<h2 th:text="${adviser.id == null} ? 'New adviser' : 'Edit adviser'"></h2>
+
+<form th:action="@{/adviser/save}" th:object="${adviser}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{photo}">
+    <p>Name: <input type="text" th:field="*{name}" required></p>
+    <p>Department: <input type="text" th:field="*{department}"></p>
+    <p th:if="*{photo}">Current photo: <img th:src="@{/images/{n}(n=*{photo})}" alt="photo"></p>
+    <p>Photo (uploaded to HDFS): <input type="file" name="file" accept="image/*"></p>
+    <button type="submit">Save</button>
+    <a th:href="@{/advisers}">Cancel</a>
+</form>
+</body>
+</html>
